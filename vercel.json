@@ -1,0 +1,31 @@
+{
+    "version": 2,
+    "builds": [
+      {
+        "src": "api/get_instrument_parts.py",
+        "use": "@vercel/python",
+        "config": {
+          "runtime": "python3.9"
+        }
+      },
+      {
+        "src": "api/hello.py",
+        "use": "@vercel/python",
+        "config": {
+          "runtime": "python3.9"
+        }
+      }
+    ],
+    "routes": [
+      {
+        "src": "/api/getInstrumentParts",
+        "dest": "api/get_instrument_parts.py",
+        "methods": ["GET"]
+      },
+      {
+        "src": "/api/hello",
+        "dest": "api/hello.py",
+        "methods": ["GET"]
+      }
+    ]
+  }
