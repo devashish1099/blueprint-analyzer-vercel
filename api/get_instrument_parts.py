@@ -137,7 +137,12 @@ class handler(BaseHTTPRequestHandler):
 
                 print(f"LLM content before JSON parsing: {llm_content}")
                 try:
-                    processed_response = json.loads(llm_content)
+                    if llm_content.strip().startswith("```json"):
+                        processed_response = json.loads(llm_content.strip()[len("```json"):].rstrip("```").strip())
+                    elif llm_content.strip().startswith("```"):
+                         processed_response = json.loads(llm_content.strip()[len("```"):].rstrip("```").strip())
+                    else:
+                        processed_response = json.loads(llm_content.strip())
                 except json.JSONDecodeError:
                     processed_response = {"raw_llm_response": llm_content, "note": "LLM output was not perfectly valid JSON."}
             else:
