@@ -4,6 +4,7 @@ from urllib.parse import urlparse, parse_qs
 import requests
 import base64
 import os
+import mimetypes
 
 class handler(BaseHTTPRequestHandler):
 
@@ -27,10 +28,27 @@ class handler(BaseHTTPRequestHandler):
                 elif "?" not in image_url:
                     image_url = image_url + "?dl=1"
 
+            image_mime_type = "application/octet-stream"
             try:
                 img_res = requests.get(image_url, stream=True, timeout=10)
                 img_res.raise_for_status()
                 image_bytes = img_res.content
+
+                if 'Content-Type' in img_res.headers:
+                    image_mime_type = img_res.headers['Content-Type'].split(';')[0].strip()
+                else:
+                    path = urlparse(image_url).path
+                    mime_type, _ = mimetypes.guess_type(path)
+                    if mime_type:
+                        image_mime_type = mime_type
+
+                if not image_mime_type.startswith("image/"):
+                    self.send_response(400)
+                    self.send_header('Content-type', 'application/json')
+                    self.end_headers()
+                    self.wfile.write(json.dumps({'error': f'Unsupported content type detected: {image_mime_type}. Must be an image.'}).encode('utf-8'))
+                    return
+                
                 base64_image = base64.b64encode(image_bytes).decode('utf-8')
             except requests.exceptions.RequestException as e:
                 self.send_response(400)
@@ -88,11 +106,11 @@ class handler(BaseHTTPRequestHandler):
                         "role": "user",
                         "content": [
                             {"type": "text", "text": fixed_prompt},
-                            {"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{base64_image}"}} # Use appropriate image type
+                            {"type": "image_url", "image_url": {"url": f"data:{image_mime_type};base64,{base64_image}"}}
                         ]
                     }
                 ],
-                "max_tokens": 4000 # Adjust based on expected response length
+                "max_tokens": 4000
             }
 
             try:
