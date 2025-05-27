@@ -123,6 +123,8 @@ class handler(BaseHTTPRequestHandler):
 
                 openrouter_response.raise_for_status()
                 llm_output = openrouter_response.json()
+
+                print(f"Raw LLM API Response (full): {json.dumps(llm_output, indent=2)}")
             except  requests.exceptions.RequestException as e:
                 self.send_response(500)
                 self.send_header('Content-type', 'application/json')
@@ -132,6 +134,8 @@ class handler(BaseHTTPRequestHandler):
 
             if llm_output and llm_output.get('choices'):
                 llm_content = llm_output['choices'][0]['message']['content']
+
+                print(f"LLM content before JSON parsing: {llm_content}")
                 try:
                     processed_response = json.loads(llm_content)
                 except json.JSONDecodeError:
