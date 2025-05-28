@@ -40,8 +40,12 @@
       "methods": ["GET"]
     },
     {
-      "src": "/(.*)",
-      "dest": "public/$1"
+      "src": "/",               
+      "dest": "public/index.html"
+    },
+    {
+      "src": "/script.js",
+      "dest": "public/script.js"
     }
   ]
 }
