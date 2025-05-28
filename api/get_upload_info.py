@@ -29,7 +29,7 @@ class handler(BaseHTTPRequestHandler):
             self.wfile.write(json.dumps(response_data).encode('utf-8'))
             return
 
-        except:
+        except Exception as e:
             self.send_response(500)
             self.send_header('Content-type', 'application/json')
             self.end_headers()
