@@ -38,10 +38,6 @@
       "src": "/api/hello",
       "dest": "api/hello.py",
       "methods": ["GET"]
-    },
-    {
-      "src": "/(.*)",           
-      "dest": "public/$1"      
     }
   ]
 }
