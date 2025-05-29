@@ -35,6 +35,13 @@
       "config": {
         "runtime": "python3.9"
       }
+    },
+    {
+      "src": "api/get_random_sanitized_meme.py",
+      "use": "@vercel/python",
+      "config": {
+        "runtime": "python3.9"
+      }
     }
   ],
   "routes": [
@@ -62,6 +69,15 @@
       "src": "/api/upvoteMeme",
       "dest": "api/upvote_meme.py",
       "methods": ["GET", "POST","OPTIONS"]
+    },
+    {
+      "src": "/api/getRandomMeme",
+      "dest": "api/get_random_meme.py",
+      "methods": ["GET"]
+    },
+    {
+      "src": "/memes/(.*)",
+      "dest": "/memes/$1"
     }
   ]
 }
