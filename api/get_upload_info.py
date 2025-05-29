@@ -34,6 +34,7 @@ class handler(BaseHTTPRequestHandler):
         except Exception as e:
             self.send_response(500)
             self.send_header('Content-type', 'application/json')
+            self.send_header('Access-Control-Allow-Origin', 'https://blueprint-upload-ui.vercel.app') 
             self.end_headers()
             self.wfile.write(json.dumps({'error': f'An unexpected error occurred: {str(e)}'}).encode('utf-8'))
             return
