@@ -89,7 +89,7 @@ class handler(BaseHTTPRequestHandler):
                       "description": "string",
                       "manufacturing_process": {
                         "classification": "string",
-                        "process_name": "string"
+                        "operation_name": "string"
                       }
                     },
                     // ... (add more part objects as needed)
