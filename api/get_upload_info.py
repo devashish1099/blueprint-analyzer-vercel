@@ -10,6 +10,7 @@ class handler(BaseHTTPRequestHandler):
             if not imgbb_api_key:
                 self.send_response(500)
                 self.send_header('Content-type', 'application/json')
+                self.send_header('Access-Control-Allow-Origin', 'https://blueprint-upload-ui.vercel.app') 
                 self.end_headers()
                 self.wfile.write(json.dumps({'error': 'IMGBB_API_KEY environment variable not set.'}).encode('utf-8'))
                 return
