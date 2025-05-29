@@ -2,6 +2,8 @@ from http.server import BaseHTTPRequestHandler
 import json
 import random
 import os
+import base64
+import mimetypes
 
 MEMES_DIR_NAME = "memes"
 script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -33,11 +35,21 @@ class handler(BaseHTTPRequestHandler):
 
         selected_meme_path = random.choice(SANATIZED_MEME_PATHS)
 
+        with open(selected_meme_path, "rb") as image_file:
+                encoded_image_data = base64.b64encode(image_file.read()).decode('utf-8')
+
+        content_type, _ = mimetypes.guess_type(encoded_image_data)
+        if content_type is None:
+            content_type = "application/octet-stream"
+
         self.send_response(200)
         self.send_header('Content-type', 'application/json')
         self.send_header('Access-Control-Allow-Origin', 'https://blueprint-upload-ui.vercel.app')
         self.end_headers()
-        response_data = {'url_path': selected_meme_path}
+        response_data = {
+            'image_data': encoded_image_data,
+            'content_type': content_type
+        }
         self.wfile.write(json.dumps(response_data).encode('utf-8'))
         return
 
