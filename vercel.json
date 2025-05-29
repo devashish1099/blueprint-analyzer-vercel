@@ -56,12 +56,12 @@
     {
       "src": "/api/upvoteProject",
       "dest": "api/upvote_project.py",
-      "methods": ["GET", "POST"]
+      "methods": ["GET", "POST","OPTIONS"]
     },
     {
       "src": "/api/upvoteMeme",
       "dest": "api/upvote_meme.py",
-      "methods": ["GET", "POST"]
+      "methods": ["GET", "POST","OPTIONS"]
     }
   ]
 }
