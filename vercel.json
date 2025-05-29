@@ -21,6 +21,20 @@
       "config": {
         "runtime": "python3.9"
       }
+    },
+    {
+      "src": "api/upvote_project.py",
+      "use": "@vercel/python",
+      "config": {
+        "runtime": "python3.9"
+      }
+    },
+    {
+      "src": "api/upvote_meme.py",
+      "use": "@vercel/python",
+      "config": {
+        "runtime": "python3.9"
+      }
     }
   ],
   "routes": [
@@ -38,6 +52,16 @@
       "src": "/api/hello",
       "dest": "api/hello.py",
       "methods": ["GET"]
+    },
+    {
+      "src": "/api/upvoteProject",
+      "dest": "api/upvote_project.py",
+      "methods": ["GET", "POST"]
+    },
+    {
+      "src": "/api/upvoteMeme",
+      "dest": "api/upvote_meme.py",
+      "methods": ["GET", "POST"]
     }
   ]
 }
