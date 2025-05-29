@@ -73,7 +73,7 @@
     {
       "src": "/api/getRandomMeme",
       "dest": "api/get_random_meme.py",
-      "methods": ["GET"]
+      "methods": ["GET","OPTIONS"]
     },
     {
       "src": "/memes/(.*)",
