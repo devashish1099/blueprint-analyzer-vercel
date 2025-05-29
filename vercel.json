@@ -37,7 +37,7 @@
       }
     },
     {
-      "src": "api/get_random_sanitized_meme.py",
+      "src": "api/get_random_meme.py",
       "use": "@vercel/python",
       "config": {
         "runtime": "python3.9"
