@@ -71,7 +71,8 @@ class handler(BaseHTTPRequestHandler):
                 'Content-Type': 'application/json'
             }
 
-            model_name = "meta-llama/llama-4-maverick:free"
+            # model_name = "meta-llama/llama-4-maverick:free"
+            model_name = os.environ.get('MODEL_NAME')
 
             fixed_prompt = """Analyze this blueprint.
             1.  **Identify the overall machine or operation** that these parts are intended to build or perform. Provide a concise name.
